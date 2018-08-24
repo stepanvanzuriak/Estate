@@ -77,7 +77,22 @@ describe Estate do
     state.set { |prev| {age: prev["age"] + 1} }
 
     extra_age.call.should eq(24)
+  end
 
+  it "list example" do
+    state = Estate.create({name: "Jhon", status: "king", age: 21, list: [1, 2, 3]})
+    list = state.select({"list"})
 
+    list.call.should eq([1, 2, 3])
+  end
+
+  it "nested tuples" do
+    state = Estate.create({data: {foo: {bar: 42}}})
+
+    state.get.should eq({data: {foo: {bar: 42}}})
+
+    foo = state.select {|state| state["data"]["foo"]}
+
+    foo.call.should eq({bar: 42})
   end
 end
