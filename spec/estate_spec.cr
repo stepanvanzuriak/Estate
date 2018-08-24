@@ -50,6 +50,33 @@ describe Estate do
     ageOnly = test.select {|state| state["age"]}
     ageOnly.call.should eq(12)
     ageOnly.call.should eq(12)
+  end
+
+  it "example1" do
+    state = Estate.create({name: "Steve", age: 19})
+
+    state.get({"name"}).should eq("Steve")
+    state.get({"name", "age"}).should eq({"Steve", 19})
+  end
+
+  it "example2" do
+    state = Estate.create({bugs: 12, features: 13})
+    state.set { |prev| {features: prev["features"] + 1, bugs: prev["bugs"] + 10} }
+
+    state.get.should eq({bugs: 22, features: 14})
+  end
+
+  it "example3" do
+    state = Estate.create({name: "Jhon", status: "king", age: 21})
+    status = state.select({"status"})
+    extra_age = state.select { | state | state["age"] + 2 }
+
+    status.call.should eq("king")
+    extra_age.call.should eq(23)
+
+    state.set { |prev| {age: prev["age"] + 1} }
+
+    extra_age.call.should eq(24)
 
 
   end
