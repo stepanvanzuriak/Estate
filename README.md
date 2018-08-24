@@ -1,4 +1,4 @@
-# Estate
+# Estate 📂
 
 Simple predictable state manager inspaired by [reworm](https://github.com/pedronauck/reworm)
 
@@ -69,4 +69,4 @@ puts extra_age.call # 24
 
 ## Contributors
 
-- [stepanvanzuriak](https://github.com/stepanvanzuriak) your-name-here - creator, maintainer
+- [stepanvanzuriak](https://github.com/stepanvanzuriak) - creator, maintainer
