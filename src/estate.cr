@@ -45,9 +45,13 @@ module Estate
       end
     end
 
-    def select(&block)
-      selected = yield @state
-      -> {selected}
+    def select(&block : T -> _)
+      yield @state
+      -> { invoce(@state, &block) }
+    end
+
+    private def invoce(state, &block : T -> _)
+      block.call(state)
     end
 
   end
