@@ -1,4 +1,4 @@
-# Estate
+# Estate 📂
 
 Simple predictable state manager inspaired by [reworm](https://github.com/pedronauck/reworm)
 
