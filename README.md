@@ -1,6 +1,6 @@
-# estate
+# Estate
 
-TODO: Write a description here
+Simple predictable state manager inspaired by [reworm](https://github.com/pedronauck/reworm)
 
 ## Installation
 
@@ -9,20 +9,55 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   estate:
-    github: your-github-user/estate
+    github: stepanvanzuriak/estate
 ```
 
 ## Usage
 
+### Get state
+
 ```crystal
 require "estate"
+
+state = Estate.create({name: "Steve", age: 19})
+
+puts state.get({"name"}) # "Steve"
+puts state.get({"name", "age"}) # {"Steve", 19}
+
 ```
 
-TODO: Write usage instructions here
+### Change state
 
-## Development
+```crystal
+require "estate"
 
-TODO: Write development instructions here
+state = Estate.create({bugs: 12, features: 13})
+
+state.set { |prev| {features: prev["features"] + 1, bugs: prev["bugs"] + 10} }
+puts state.get # {bugs: 22, features: 14}
+```
+
+### Don't repeat yourself with select
+
+```crystal
+require "estate"
+
+state = Estate.create({name: "Jhon", status: "king", age: 21})
+
+status = state.select({"status"})
+
+puts status.call # "king"
+puts status.call # "king"
+
+extra_age = state.select { | state | state["age"] + 2 }
+
+puts extra_age.call # 23
+puts extra_age.call # 23
+
+state.set { |prev| {age: prev["age"] + 1} }
+
+puts extra_age.call # 24
+```
 
 ## Contributing
 
@@ -34,4 +69,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [your-github-user](https://github.com/your-github-user) your-name-here - creator, maintainer
+- [stepanvanzuriak](https://github.com/stepanvanzuriak) your-name-here - creator, maintainer
