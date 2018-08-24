@@ -46,7 +46,6 @@ module Estate
     end
 
     def select(&block : T -> _)
-      yield @state
       -> { invoce(@state, &block) }
     end
 
